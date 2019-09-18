@@ -5,6 +5,7 @@ package builder
 import (
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -63,10 +64,10 @@ func (b *Ansible) stage(userStageName string, container Container) error {
 
 	container.AddEnv(
 		map[string]string{
-			"ANSIBLE_CONFIG":              filepath.Join(b.containerWorkDir(), "ansible.cfg"),
-			"WERF_DUMP_CONFIG_DOC_PATH":   filepath.Join(b.containerWorkDir(), "dump_config.json"),
+			"ANSIBLE_CONFIG":              path.Join(b.containerWorkDir(), "ansible.cfg"),
+			"WERF_DUMP_CONFIG_DOC_PATH":   path.Join(b.containerWorkDir(), "dump_config.json"),
 			"PYTHONPATH":                  "",
-			"LOGBOEK_SO_PATH":             filepath.Join(b.containerWorkDir(), "lib", "werf", ".logboek.so"),
+			"LOGBOEK_SO_PATH":             path.Join(b.containerWorkDir(), "lib", "werf", ".logboek.so"),
 			"PYTHONIOENCODING":            "utf-8",
 			"ANSIBLE_PREPEND_SYSTEM_PATH": stapel.SystemPATH(),
 		},
@@ -94,8 +95,8 @@ func (b *Ansible) stage(userStageName string, container Container) error {
 	container.AddVolumeFrom(fmt.Sprintf("%s:ro", containerName))
 
 	commandParts := []string{
-		filepath.Join(b.containerWorkDir(), "ansible-playbook"),
-		filepath.Join(b.containerWorkDir(), "playbook.yml"),
+		path.Join(b.containerWorkDir(), "ansible-playbook"),
+		path.Join(b.containerWorkDir(), "playbook.yml"),
 	}
 
 	if value, exist := os.LookupEnv("WERF_DEBUG_ANSIBLE_ARGS"); exist {

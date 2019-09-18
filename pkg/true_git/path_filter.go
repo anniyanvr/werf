@@ -2,6 +2,7 @@ package true_git
 
 import (
 	"fmt"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -62,8 +63,8 @@ func IsFileInBasePath(filePath, basePath string) bool {
 	return strings.HasPrefix(filePath, NormalizeDirectoryPrefix(basePath))
 }
 
-func IsFilePathMatchesPattern(filePath, pattern string) bool {
-	matched, err := doublestar.PathMatch(pattern, filePath)
+func IsFilePathMatchesPattern(fpath, pattern string) bool {
+	matched, err := doublestar.PathMatch(pattern, fpath)
 	if err != nil {
 		panic(err)
 	}
@@ -71,7 +72,7 @@ func IsFilePathMatchesPattern(filePath, pattern string) bool {
 		return true
 	}
 
-	matched, err = doublestar.PathMatch(filepath.Join(pattern, "**", "*"), filePath)
+	matched, err = doublestar.PathMatch(filepath.Join(pattern, "**", "*"), fpath)
 	if err != nil {
 		panic(err)
 	}
@@ -96,22 +97,22 @@ func IsFilePathMatchesOneOfPatterns(filePath string, patterns []string) bool {
 	return false
 }
 
-func TrimFileBasePath(filePath, basePath string) string {
-	filePath = NormalizeAbsolutePath(filePath)
+func TrimFileBasePath(fpath, basePath string) string {
+	fpath = NormalizeAbsolutePath(fpath)
 	basePath = NormalizeAbsolutePath(basePath)
 
-	if filePath == basePath {
+	if fpath == basePath {
 		// filePath path is always a path to a file, not a directory.
 		// Thus if BasePath is equal filePath, then BasePath is a path to the file.
 		// Return file name in this case by convention.
-		return filepath.Base(filePath)
+		return filepath.Base(fpath)
 	}
 
-	return strings.TrimPrefix(filePath, NormalizeDirectoryPrefix(basePath))
+	return strings.TrimPrefix(fpath, NormalizeDirectoryPrefix(basePath))
 }
 
-func NormalizeAbsolutePath(path string) string {
-	return filepath.Clean(filepath.Join("/", path))
+func NormalizeAbsolutePath(p string) string {
+	return path.Clean(path.Join("/", p))
 }
 
 func NormalizeDirectoryPrefix(directoryPrefix string) string {

@@ -51,7 +51,7 @@ func Init(keys []string) error {
 
 	var defaultKeys []string
 	for _, defaultFileName := range []string{"id_rsa", "id_dsa"} {
-		path := filepath.Join(os.Getenv("HOME"), ".ssh", defaultFileName)
+		path := filepath.Join(os.Getenv("HOME"), ".ssh", defaultFileName) // TODO
 		if keyExists, _ := util.FileExists(path); keyExists {
 			defaultKeys = append(defaultKeys, path)
 		}

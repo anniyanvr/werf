@@ -54,7 +54,7 @@ loop:
 			}
 		}
 
-		extraExcludePath, err := filepath.Rel(filepath.Join(c.GetTo()), filepath.Join("/", expIncludePath))
+		extraExcludePath, err := filepath.Rel(path.Join(c.GetTo()), path.Join("/", expIncludePath)) // TODO rel
 		if err != nil {
 			panic(err)
 		}
@@ -81,7 +81,7 @@ func (c *ExportBase) GetIncludePathsForAutoExclude() []string {
 	} else {
 		var validateIncludePaths []string
 		for _, p := range c.IncludePaths {
-			validateIncludePaths = append(validateIncludePaths, path.Join(pathPrefix, p))
+			validateIncludePaths = append(validateIncludePaths, path.Join(pathPrefix, p)) // TODO
 		}
 
 		return validateIncludePaths
@@ -96,7 +96,7 @@ func (c *ExportBase) GetExcludePathsForAutoExclude() []string {
 
 	var validateExcludePaths []string
 	for _, p := range c.ExcludePaths {
-		validateExcludePaths = append(validateExcludePaths, path.Join(pathPrefix, p))
+		validateExcludePaths = append(validateExcludePaths, path.Join(pathPrefix, p)) // TODO
 	}
 
 	return validateExcludePaths

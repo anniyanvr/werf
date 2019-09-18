@@ -2,20 +2,19 @@ package builder
 
 import (
 	"fmt"
-	"path/filepath"
-
 	"github.com/flant/logboek_py"
 	"github.com/flant/werf/pkg/stapel"
+	"path"
 
 	"github.com/flant/werf/pkg/build/builder/ansible"
 )
 
 func (b *Ansible) assetsAnsibleCfg() string {
-	hostsPath := filepath.Join(b.containerWorkDir(), "hosts")
-	callbackPluginsPath := filepath.Join(b.containerWorkDir(), "lib", "callback")
+	hostsPath := path.Join(b.containerWorkDir(), "hosts")
+	callbackPluginsPath := path.Join(b.containerWorkDir(), "lib", "callback")
 	sudoBinPath := stapel.SudoBinPath()
-	localTmpDirPath := filepath.Join(b.containerTmpDir(), "local")
-	remoteTmpDirPath := filepath.Join(b.containerTmpDir(), "remote")
+	localTmpDirPath := path.Join(b.containerTmpDir(), "local")
+	remoteTmpDirPath := path.Join(b.containerTmpDir(), "remote")
 
 	format := `[defaults]
 inventory = %[1]s

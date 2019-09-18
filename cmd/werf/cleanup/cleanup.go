@@ -2,7 +2,7 @@ package cleanup
 
 import (
 	"fmt"
-	"path"
+	"path/filepath"
 
 	"github.com/flant/kubedog/pkg/kube"
 	"github.com/flant/logboek"
@@ -148,7 +148,7 @@ func runCleanup() error {
 	}
 
 	var localGitRepo cleaning.GitRepo
-	gitDir := path.Join(projectDir, ".git")
+	gitDir := filepath.Join(projectDir, ".git")
 	if exist, err := util.DirExists(gitDir); err != nil {
 		return err
 	} else if exist {

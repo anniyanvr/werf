@@ -57,7 +57,7 @@ func (b *Shell) stage(userStageName string, container Container) error {
 		fmt.Sprintf("%s:%s:rw", stageHostTmpDir, b.containerTmpDir()),
 	)
 
-	stageHostTmpScriptFilePath := path.Join(stageHostTmpDir, scriptFileName)
+	stageHostTmpScriptFilePath := filepath.Join(stageHostTmpDir, scriptFileName)
 	containerTmpScriptFilePath := path.Join(b.containerTmpDir(), scriptFileName)
 
 	var scriptLines []string
@@ -156,7 +156,7 @@ func (b *Shell) stageHostTmpDir(userStageName string) (string, error) {
 }
 
 func (b *Shell) containerTmpDir() string {
-	return filepath.Join(b.extra.ContainerWerfPath, "shell")
+	return path.Join(b.extra.ContainerWerfPath, "shell")
 }
 
 func writeExecutableFile(path string, content string) error {

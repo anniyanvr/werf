@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"path"
 	"strings"
 
 	"github.com/flant/werf/pkg/util"
@@ -48,8 +49,8 @@ func isRelativePath(path string) bool {
 	return !isAbsolutePath(path)
 }
 
-func isAbsolutePath(path string) bool {
-	return strings.HasPrefix(path, "/")
+func isAbsolutePath(p string) bool {
+	return path.IsAbs(p)
 }
 
 func oneOrNone(conditions []bool) bool {

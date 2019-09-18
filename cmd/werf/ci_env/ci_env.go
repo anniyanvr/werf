@@ -89,7 +89,7 @@ func runCIEnv(cmd *cobra.Command, args []string) error {
 func generateGitlabEnvs() error {
 	dockerConfigPath := *CommonCmdData.DockerConfig
 	if *CommonCmdData.DockerConfig == "" {
-		dockerConfigPath = filepath.Join(os.Getenv("HOME"), ".docker")
+		dockerConfigPath = filepath.Join(os.Getenv("HOME"), ".docker") // TODO
 	}
 
 	tmp_manager.AutoGCEnabled = false

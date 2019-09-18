@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -227,7 +228,7 @@ func (gp *GitMapping) applyPatchCommand(patchFile *ContainerFileDescriptor, arch
 
 	switch archiveType {
 	case git_repo.FileArchive:
-		applyPatchDirectory = filepath.Dir(gp.To)
+		applyPatchDirectory = path.Dir(gp.To)
 	case git_repo.DirectoryArchive:
 		applyPatchDirectory = gp.To
 	default:
@@ -388,7 +389,7 @@ func (gp *GitMapping) applyArchiveCommand(archiveFile *ContainerFileDescriptor, 
 
 	switch archiveType {
 	case git_repo.FileArchive:
-		unpackArchiveDirectory = filepath.Dir(gp.To)
+		unpackArchiveDirectory = path.Dir(gp.To)
 	case git_repo.DirectoryArchive:
 		unpackArchiveDirectory = gp.To
 	default:
@@ -615,7 +616,7 @@ func (gp *GitMapping) getArchiveFileDescriptor(archiveOpts git_repo.ArchiveOptio
 
 	return &ContainerFileDescriptor{
 		FilePath:          filepath.Join(gp.ArchivesDir, fileName),
-		ContainerFilePath: filepath.Join(gp.ContainerArchivesDir, fileName),
+		ContainerFilePath: path.Join(gp.ContainerArchivesDir, fileName),
 	}
 }
 
@@ -664,8 +665,8 @@ func (gp *GitMapping) preparePatchPathsListFile(patchOpts git_repo.PatchOptions,
 	}
 
 	fullPaths := make([]string, 0)
-	for _, path := range patch.GetPaths() {
-		fullPaths = append(fullPaths, filepath.Join(gp.To, path))
+	for _, p := range patch.GetPaths() {
+		fullPaths = append(fullPaths, path.Join(gp.To, p))
 	}
 
 	pathsData := strings.Join(fullPaths, "\000")
@@ -712,7 +713,7 @@ func (gp *GitMapping) getPatchPathsListFileDescriptor(patchOpts git_repo.PatchOp
 
 	return &ContainerFileDescriptor{
 		FilePath:          filepath.Join(gp.PatchesDir, fileName),
-		ContainerFilePath: filepath.Join(gp.ContainerPatchesDir, fileName),
+		ContainerFilePath: path.Join(gp.ContainerPatchesDir, fileName),
 	}
 }
 
@@ -721,7 +722,7 @@ func (gp *GitMapping) getPatchFileDescriptor(patchOpts git_repo.PatchOptions) *C
 
 	return &ContainerFileDescriptor{
 		FilePath:          filepath.Join(gp.PatchesDir, fileName),
-		ContainerFilePath: filepath.Join(gp.ContainerPatchesDir, fileName),
+		ContainerFilePath: path.Join(gp.ContainerPatchesDir, fileName),
 	}
 }
 
